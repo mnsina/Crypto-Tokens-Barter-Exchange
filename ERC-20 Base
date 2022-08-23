@@ -9,10 +9,10 @@ contract Crypto_Coins_CLP is ERC20 {
 
 // 0) Variables Declaration:
 
-string public Info = "Tokens represent stocks of an "
-                     "NFT dealer firm. Initially there are "
-                     "100 unissued stocks with a unit price of "
-                     "0.01 ethers.";
+string public Info = "Tokens represent ethereum coins "
+                     "that can be use in The Barter Palace Inc'. Each coin can be "
+                     "cashback at any moment for the same amount of ethereum it was originally "
+                     "bought.";
 
 address public Owner_Address;
 address public Contract_Address;  
