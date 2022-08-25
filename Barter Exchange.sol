@@ -167,6 +167,94 @@ function NFT_ERC20_Public_Buy(uint Offer_Id) external payable {
      NFT_Inventory[Aux_NFT][Aux_NFT_Id]=0;                
 }
 
+// 2.4) Buy/Sell NFT for ERC20 (Private):
+
+function NFT_ERC20_Private_Offer(ERC721 Contract_NFT, uint Id, ERC20 Token, uint Quantity, address Buyer) public {
+    require(Contract_NFT.ownerOf(Id)==msg.sender, "Not the owner of the NFT Token");
+    NFT_ERC20_Private_Offers.push(NFT_ERC20_Private(Contract_NFT, Id, Token, Quantity, true, "Private offer", msg.sender, Buyer));
+    Contract_NFT.safeTransferFrom(msg.sender, Enterprise, Id);
+     NFT_Inventory[Contract_NFT][Id]=1;
+}
+
+function NFT_ERC20_Private_Buy(uint Offer_Id) external payable {
+     ERC20 Aux_ERC20 = NFT_ERC20_Private_Offers[Offer_Id].Tokens;
+     ERC721 Aux_NFT = NFT_ERC20_Private_Offers[Offer_Id].NFT;
+     uint Aux_NFT_Id = NFT_ERC20_Private_Offers[Offer_Id].NFT_Id;
+     uint Aux_Quantity = NFT_ERC20_Private_Offers[Offer_Id].Tokens_Quantity;
+     address Aux_Seller = NFT_ERC20_Private_Offers[Offer_Id].Seller_Account;
+
+     require(Aux_ERC20.balanceOf(msg.sender)>=Aux_Quantity, "Not enough tokens");
+     require(NFT_ERC20_Private_Offers[Offer_Id].Active==true, "The offer is not active");
+     require(NFT_ERC20_Private_Offers[Offer_Id].Buyer_Account==msg.sender, "Unauthorized buyer");
+     
+     Aux_NFT.safeTransferFrom(Enterprise, msg.sender, Aux_NFT_Id);
+     Aux_ERC20.transferFrom(msg.sender, 
+           Aux_Seller,  
+           Aux_Quantity);
+
+     NFT_ERC20_Private_Offers[Offer_Id].Active=false;
+     NFT_Inventory[Aux_NFT][Aux_NFT_Id]=0;                
+}
+
+// 2.5) Buy/Sell NFT for NFT (Public):
+
+function NFT_NFT_Public_Offer(ERC721 Contract_NFT1, uint Id1, ERC721 Contract_NFT2, uint Id2) public {
+    require(Contract_NFT1.ownerOf(Id1)==msg.sender, "Not the owner of the NFT Token");
+    NFT_NFT_Public_Offers.push(NFT_NFT_Public(Contract_NFT1, Id1, Contract_NFT2, Id2, true, "Public offer", msg.sender));
+    Contract_NFT1.safeTransferFrom(msg.sender, Enterprise, Id1);
+     NFT_Inventory[Contract_NFT1][Id1]=1;
+}
+
+function NFT_NFT_Public_Buy(uint Offer_Id) external payable {
+     ERC721 Aux_NFT1 = NFT_NFT_Public_Offers[Offer_Id].NFT_Seller;
+     ERC721 Aux_NFT2 = NFT_NFT_Public_Offers[Offer_Id].NFT_Buyer;
+     uint Aux_NFT_Id1 = NFT_NFT_Public_Offers[Offer_Id].NFT_Id1;
+     uint Aux_NFT_Id2 = NFT_NFT_Public_Offers[Offer_Id].NFT_Id2;
+     address Aux_Seller = NFT_NFT_Public_Offers[Offer_Id].Seller_Account;
+
+     require(Aux_NFT2.ownerOf(Aux_NFT_Id2)==msg.sender, "Not the owner of the NFT Token");
+     require(NFT_NFT_Public_Offers[Offer_Id].Active==true, "The offer is not active");
+     
+     Aux_NFT1.safeTransferFrom(Enterprise, msg.sender, Aux_NFT_Id1);
+     Aux_NFT2.safeTransferFrom(msg.sender, Aux_Seller, Aux_NFT_Id2);
+
+     NFT_NFT_Public_Offers[Offer_Id].Active=false;
+     NFT_Inventory[Aux_NFT1][Aux_NFT_Id1]=0;                
+}
+
+// 2.6) Buy/Sell NFT for NFT (Private):
+
+function NFT_NFT_Private_Offer(ERC721 Contract_NFT1, uint Id1, ERC721 Contract_NFT2, uint Id2, address Buyer) public {
+    require(Contract_NFT1.ownerOf(Id1)==msg.sender, "Not the owner of the NFT Token");
+    NFT_NFT_Private_Offers.push(NFT_NFT_Private(Contract_NFT1, Id1, Contract_NFT2, Id2, true, "Private offer", msg.sender, Buyer));
+    Contract_NFT1.safeTransferFrom(msg.sender, Enterprise, Id1);
+     NFT_Inventory[Contract_NFT1][Id1]=1;
+}
+
+function NFT_NFT_Private_Buy(uint Offer_Id) external payable {
+     ERC721 Aux_NFT1 = NFT_NFT_Private_Offers[Offer_Id].NFT_Seller;
+     ERC721 Aux_NFT2 = NFT_NFT_Private_Offers[Offer_Id].NFT_Buyer;
+     uint Aux_NFT_Id1 = NFT_NFT_Private_Offers[Offer_Id].NFT_Id1;
+     uint Aux_NFT_Id2 = NFT_NFT_Private_Offers[Offer_Id].NFT_Id2;
+     address Aux_Seller = NFT_NFT_Private_Offers[Offer_Id].Seller_Account;
+
+     require(Aux_NFT2.ownerOf(Aux_NFT_Id2)==msg.sender, "Not the owner of the NFT Token");
+     require(NFT_NFT_Private_Offers[Offer_Id].Active==true, "The offer is not active");
+     require(NFT_NFT_Private_Offers[Offer_Id].Buyer_Account==msg.sender, "Unauthorized buyer");
+     
+     Aux_NFT1.safeTransferFrom(Enterprise, msg.sender, Aux_NFT_Id1);
+     Aux_NFT2.safeTransferFrom(msg.sender, Aux_Seller, Aux_NFT_Id2);
+
+     NFT_NFT_Private_Offers[Offer_Id].Active=false;
+     NFT_Inventory[Aux_NFT1][Aux_NFT_Id1]=0;                
+}
+
+// 2.7) Buy/Sell ERC20 for ERC20 (Public):
+
+// 2.8) Buy/Sell ERC20 for ERC20 (Private):
+
+// 2.9) Cancel offer:
+
 
 // 3) End Contract:
 
