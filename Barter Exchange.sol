@@ -293,7 +293,7 @@ function ERC20_ERC20_Public_Buy(uint Offer_Id) external payable {
      address Aux_Seller = ERC20_ERC20_Public_Offers[Offer_Id].Seller_Account;
 
      require(Aux_Tokens2.balanceOf(msg.sender)>=Aux_Quantity2, "Not enough tokens");
-     require(NFT_NFT_Public_Offers[Offer_Id].Active==true, "The offer is not active");
+     require(ERC20_ERC20_Public_Offers[Offer_Id].Active==true, "The offer is not active");
      
      Aux_Tokens1.transferFrom(Enterprise, 
            msg.sender,  
