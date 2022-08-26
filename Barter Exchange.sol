@@ -295,8 +295,7 @@ function ERC20_ERC20_Public_Buy(uint Offer_Id) external payable {
      require(Aux_Tokens2.balanceOf(msg.sender)>=Aux_Quantity2, "Not enough tokens");
      require(ERC20_ERC20_Public_Offers[Offer_Id].Active==true, "The offer is not active");
      
-     Aux_Tokens1.transferFrom(Enterprise, 
-           msg.sender,  
+     Aux_Tokens1.transfer(msg.sender,  
            Aux_Quantity1);
      Aux_Tokens2.transferFrom(msg.sender, 
            Aux_Seller,  
@@ -330,8 +329,7 @@ function ERC20_ERC20_Private_Buy(uint Offer_Id) external payable {
      require(ERC20_ERC20_Private_Offers[Offer_Id].Active==true, "The offer is not active");
      require(ERC20_ERC20_Private_Offers[Offer_Id].Buyer_Account==msg.sender, "Unauthorized buyer");
      
-     Aux_Tokens1.transferFrom(Enterprise, 
-           msg.sender,  
+     Aux_Tokens1.transfer(msg.sender,  
            Aux_Quantity1);
      Aux_Tokens2.transferFrom(msg.sender, 
            Aux_Seller,  
@@ -365,8 +363,7 @@ function ERC20_NFT_Public_Buy(uint Offer_Id) external payable {
      require(ERC20_NFT_Public_Offers[Offer_Id].Active==true, "The offer is not active");
      
      Aux_NFT.safeTransferFrom(msg.sender, Aux_Seller, Aux_NFT_Id);
-     Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+     Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
      ERC20_ERC20_Private_Offers[Offer_Id].Active=false;
@@ -398,8 +395,7 @@ function ERC20_NFT_Private_Buy(uint Offer_Id) external payable {
      require(ERC20_NFT_Private_Offers[Offer_Id].Buyer_Account==msg.sender, "Unauthorized buyer");
      
      Aux_NFT.safeTransferFrom(msg.sender, Aux_Seller, Aux_NFT_Id);
-     Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+     Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
      ERC20_ERC20_Private_Offers[Offer_Id].Active=false;
@@ -457,8 +453,7 @@ require(msg.sender==ERC20_ERC20_Public_Offers[Offer_Id].Seller_Account);
 ERC20 Aux_ERC20 = ERC20_ERC20_Public_Offers[Offer_Id].Tokens_Seller;
 uint Aux_Quantity = ERC20_ERC20_Public_Offers[Offer_Id].Tokens_Quantity1;
 
-Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
 ERC20_ERC20_Public_Offers[Offer_Id].Active=false;
@@ -471,8 +466,7 @@ require(msg.sender==ERC20_ERC20_Private_Offers[Offer_Id].Seller_Account);
 ERC20 Aux_ERC20 = ERC20_ERC20_Private_Offers[Offer_Id].Tokens_Seller;
 uint Aux_Quantity = ERC20_ERC20_Private_Offers[Offer_Id].Tokens_Quantity1;
 
-Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
 ERC20_ERC20_Private_Offers[Offer_Id].Active=false;
@@ -486,8 +480,7 @@ require(msg.sender==ERC20_NFT_Public_Offers[Offer_Id].Seller_Account);
 ERC20 Aux_ERC20 = ERC20_ERC20_Public_Offers[Offer_Id].Tokens_Seller;
 uint Aux_Quantity = ERC20_ERC20_Public_Offers[Offer_Id].Tokens_Quantity1;
 
-Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
 ERC20_NFT_Public_Offers[Offer_Id].Active=false;
@@ -500,8 +493,7 @@ require(msg.sender==ERC20_NFT_Private_Offers[Offer_Id].Seller_Account);
 ERC20 Aux_ERC20 = ERC20_ERC20_Private_Offers[Offer_Id].Tokens_Seller;
 uint Aux_Quantity = ERC20_ERC20_Private_Offers[Offer_Id].Tokens_Quantity1;
 
-Aux_ERC20.transferFrom(Enterprise, 
-           msg.sender,  
+Aux_ERC20.transfer(msg.sender,  
            Aux_Quantity);
 
 ERC20_NFT_Private_Offers[Offer_Id].Active=false;
