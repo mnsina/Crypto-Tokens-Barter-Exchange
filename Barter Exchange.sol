@@ -12,7 +12,7 @@ contract Crypto_Barter is ERC721, ERC721Holder {
 
 // 0) Variables Declaration:
 
-string public Info = "Tokens give access to a public "
+string public Info = "Each token gives access to publish offers in a public "
                      "barter exchange for crypto assets. Initially there is "
                      "an unlimited ammount of tokens with a unit price of "
                      "0.0001 ethers.";
@@ -166,6 +166,7 @@ function Cash_Firm() external view returns(uint) {
 // 2.3) Buy/Sell NFT for ERC20 (Public):
 
 function NFT_ERC20_Public_Offer(ERC721 Contract_NFT, uint Id, ERC20 Token, uint Quantity) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Contract_NFT.ownerOf(Id)==msg.sender, "Not the owner of the NFT Token");
     NFT_ERC20_Public_Offers.push(NFT_ERC20_Public(Contract_NFT, Id, Token, Quantity, true, "Public offer", msg.sender));
     Contract_NFT.safeTransferFrom(msg.sender, Enterprise, Id);
@@ -194,6 +195,7 @@ function NFT_ERC20_Public_Buy(uint Offer_Id) external payable {
 // 2.4) Buy/Sell NFT for ERC20 (Private):
 
 function NFT_ERC20_Private_Offer(ERC721 Contract_NFT, uint Id, ERC20 Token, uint Quantity, address Buyer) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Contract_NFT.ownerOf(Id)==msg.sender, "Not the owner of the NFT Token");
     NFT_ERC20_Private_Offers.push(NFT_ERC20_Private(Contract_NFT, Id, Token, Quantity, true, "Private offer", msg.sender, Buyer));
     Contract_NFT.safeTransferFrom(msg.sender, Enterprise, Id);
@@ -223,6 +225,7 @@ function NFT_ERC20_Private_Buy(uint Offer_Id) external payable {
 // 2.5) Buy/Sell NFT for NFT (Public):
 
 function NFT_NFT_Public_Offer(ERC721 Contract_NFT1, uint Id1, ERC721 Contract_NFT2, uint Id2) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Contract_NFT1.ownerOf(Id1)==msg.sender, "Not the owner of the NFT Token");
     NFT_NFT_Public_Offers.push(NFT_NFT_Public(Contract_NFT1, Id1, Contract_NFT2, Id2, true, "Public offer", msg.sender));
     Contract_NFT1.safeTransferFrom(msg.sender, Enterprise, Id1);
@@ -249,6 +252,7 @@ function NFT_NFT_Public_Buy(uint Offer_Id) external payable {
 // 2.6) Buy/Sell NFT for NFT (Private):
 
 function NFT_NFT_Private_Offer(ERC721 Contract_NFT1, uint Id1, ERC721 Contract_NFT2, uint Id2, address Buyer) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Contract_NFT1.ownerOf(Id1)==msg.sender, "Not the owner of the NFT Token");
     NFT_NFT_Private_Offers.push(NFT_NFT_Private(Contract_NFT1, Id1, Contract_NFT2, Id2, true, "Private offer", msg.sender, Buyer));
     Contract_NFT1.safeTransferFrom(msg.sender, Enterprise, Id1);
@@ -276,6 +280,7 @@ function NFT_NFT_Private_Buy(uint Offer_Id) external payable {
 // 2.7) Buy/Sell ERC20 for ERC20 (Public):
 
 function ERC20_ERC20_Public_Offer(ERC20 Tokens1, uint Quantity1, ERC20 Tokens2, uint Quantity2) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Tokens1.balanceOf(msg.sender)>=Quantity1, "Not enough tokens");
     ERC20_ERC20_Public_Offers.push(ERC20_ERC20_Public(Tokens1, Quantity1, Tokens2, Quantity2, true, "Public offer", msg.sender));
     Tokens1.transferFrom(msg.sender, 
@@ -309,6 +314,7 @@ function ERC20_ERC20_Public_Buy(uint Offer_Id) external payable {
 // 2.8) Buy/Sell ERC20 for ERC20 (Private):
 
 function ERC20_ERC20_Private_Offer(ERC20 Tokens1, uint Quantity1, ERC20 Tokens2, uint Quantity2, address Buyer) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Tokens1.balanceOf(msg.sender)>=Quantity1, "Not enough tokens");
     ERC20_ERC20_Private_Offers.push(ERC20_ERC20_Private(Tokens1, Quantity1, Tokens2, Quantity2, true, "Private offer", msg.sender, Buyer));
     Tokens1.transferFrom(msg.sender, 
@@ -343,6 +349,7 @@ function ERC20_ERC20_Private_Buy(uint Offer_Id) external payable {
 // 2.9) Buy/Sell ERC20 for NFT (Public):
 
 function ERC20_NFT_Public_Offer(ERC20 Token, uint Quantity, ERC721 Contract_NFT, uint Id) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Token.balanceOf(msg.sender)>=Quantity, "Not enough tokens");
     ERC20_NFT_Public_Offers.push(ERC20_NFT_Public(Token, Quantity, Contract_NFT, Id, true, "Public offer", msg.sender));
     Token.transferFrom(msg.sender, 
@@ -374,6 +381,7 @@ function ERC20_NFT_Public_Buy(uint Offer_Id) external payable {
 // 2.10) Buy/Sell ERC20 for NFT (Private):
 
 function ERC20_NFT_Private_Offer(ERC20 Token, uint Quantity, ERC721 Contract_NFT, uint Id, address Buyer) public {
+    require(ERC721(Enterprise).balanceOf(msg.sender)>=1, "Please buy a membership token");
     require(Token.balanceOf(msg.sender)>=Quantity, "Not enough tokens");
     ERC20_NFT_Private_Offers.push(ERC20_NFT_Private(Token, Quantity, Contract_NFT, Id, true, "Public offer", msg.sender, Buyer));
     Token.transferFrom(msg.sender, 
